@@ -1,17 +1,6 @@
+.DS_Store
+.env
+.env.*
 node_modules/
-www/
-
-# Native build outputs
-android/app/build/
-android/build/
-android/.gradle/
-android/local.properties
-android/captures/
-android/.idea/
-android/*.iml
-android/app/*.iml
-
-# Never commit a signing key
-*.keystore
-*.jks
-android/keystore.properties
+playwright-report/
+test-results/

@@ -1,0 +1,23 @@
+name: Prototype CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JavaScript syntax
+        run: node --check app.js
+      - name: Validate required assets and routes
+        run: |
+          test -s index.html
+          test -s styles.css
+          test -s app.js
+          grep -q 'SHOWOFF' index.html
+          grep -q 'aria-live="polite"' index.html
+          grep -q 'DEMO' index.html
