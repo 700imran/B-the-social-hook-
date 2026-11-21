@@ -31,7 +31,7 @@ Conventions to keep: cursor pagination (`?cursor=&limit=`), `Idempotency-Key` he
 |---|---|---|
 | Launch to a few thousand daily players | None; edge functions scale automatically, Supabase Postgres handles this | Keep indexes (already in the migration) |
 | Leaderboard reads dominate | Repeated `ORDER BY xp` queries | Cache `/leaderboard` for 5-30 s at the edge (or KV); recompute on a schedule |
-| Many votes per second on one battle (e.g. a sponsored final) | Row-level contention on one hot battle; per-row locking on profiles | Count votes in a Durable Object per battle (single-threaded, strongly consistent), flush to D1 in batches; or queue votes and aggregate |
+| Many votes per second on one battle (e.g. a sponsored final) | Row-level contention on one hot battle; per-row locking on profiles | Count votes in a Durable Object per battle (single-threaded, strongly consistent), flush to Postgres in batches; or queue votes and aggregate |
 | Real-time "live battle" feel | Polling | WebSockets via Durable Objects |
 | Fraud and abuse | Anonymous or multi-account voting | Verified accounts, Cloudflare rate limiting and Turnstile, vote exclusion table with reasons |
 | Data growth | Large `votes` table | Archive finished battles to R2, keep aggregates; scale the Supabase compute tier or add read replicas |
