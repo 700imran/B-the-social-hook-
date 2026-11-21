@@ -22,10 +22,10 @@ Players are the engine: more players means more votes, which makes a creator's r
 - **Metrics that matter:** votes per player per day, day-7 retention, battle completion rate, submissions per week, share of battles with enough votes to be decisive, sponsor revenue per battle.
 
 ## Status and what is left (honest)
-**Working now:** the public site, a daily battle with real shared votes, XP, levels, streaks, a top-players board, sound and animation, and a REST API on Cloudflare (needs your first deploy).
+**Working now:** the public site, a daily battle with real shared votes, XP, levels, streaks, a top-players board, sound and animation, and email-link accounts via Supabase, and a REST API on Cloudflare Pages (needs your first deploy; see DEPLOYMENT.md).
 **Still a demo:** submissions, niche feeds, field leaderboards and profiles are sample content.
 **Left to build, in priority order:**
-1. Real accounts (email login, verification) so one person cannot vote many times; today players are anonymous device IDs.
+1. Stronger anti-abuse on top of email accounts: disposable-email blocking, rate limits and bot checks (accounts exist now; one email can still make many accounts).
 2. Real submissions with image upload, moderation queue and report/block tools.
 3. Battles created from real submissions, with schedules, brackets and seasons (today the battle is a rotating sample pair).
 4. Anti-fraud: rate limits, device and account signals, vote exclusion with audit log.

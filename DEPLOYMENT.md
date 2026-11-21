@@ -71,11 +71,21 @@ Do not put secrets in client components, source maps, analytics events or logs.
 - [ ] Critical/high security findings resolved.
 - [ ] Support and incident ownership assigned.
 
-## Going live on Cloudflare (Pages + D1)
-```
-npm i -g wrangler && wrangler login
-wrangler d1 create showoff                    # copy database_id into wrangler.toml
-wrangler d1 execute showoff --remote --file=schema.sql
-wrangler pages deploy                         # uses wrangler.toml (public/ + functions/)
-```
-Then open the site: the arena shows "LIVE" when `/api` answers, and "PREVIEW MODE" otherwise. See `API.md`.
+## Going live: Cloudflare Pages + Supabase (auth and database)
+Deploys run from GitHub Actions on every push to `main` (`.github/workflows/deploy.yml`). No tokens are ever pasted into chat or committed.
+
+**1. Supabase (database + login)**
+- Create a project at supabase.com. Open **SQL Editor**, paste `supabase/migrations/001_init.sql`, run it.
+- **Authentication > URL Configuration:** set *Site URL* to your site (`https://showoff.pages.dev` or your domain) and add it under *Redirect URLs*.
+- **Project Settings > API:** copy the **Project URL** and the **anon public** key. Never use the `service_role` key anywhere in this project.
+- Supabase's built-in email sender is heavily rate-limited; add custom SMTP (Authentication > Emails) before a public launch.
+
+**2. Cloudflare**
+- **My Profile > API Tokens > Create Token** with permission *Account > Cloudflare Pages > Edit*. Copy the token and your **Account ID** (Workers & Pages overview).
+
+**3. GitHub secrets** (repo > Settings > Secrets and variables > Actions > New repository secret):
+`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `SUPABASE_URL`, `SUPABASE_ANON_KEY`.
+
+**4. Deploy:** Actions tab > *Deploy to Cloudflare Pages* > **Run workflow** (or just push). The first run creates the `showoff` Pages project. Open the site: the arena says **LIVE** once you are signed in via the emailed link.
+
+Troubleshooting: the arena shows *GUEST* if you are signed out, and *PREVIEW MODE* if the Supabase secrets were not injected. Guest XP stays on the device and is not transferred on sign-in.

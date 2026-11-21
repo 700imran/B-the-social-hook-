@@ -1,4 +1,0 @@
-CREATE TABLE IF NOT EXISTS players(id TEXT PRIMARY KEY,name TEXT NOT NULL,xp INTEGER NOT NULL DEFAULT 0,streak INTEGER NOT NULL DEFAULT 0,last_day TEXT,created_at TEXT DEFAULT CURRENT_TIMESTAMP);
-CREATE TABLE IF NOT EXISTS votes(battle_id TEXT NOT NULL,player_id TEXT NOT NULL,choice TEXT NOT NULL CHECK(choice IN('a','b')),created_at TEXT DEFAULT CURRENT_TIMESTAMP,PRIMARY KEY(battle_id,player_id));
-CREATE INDEX IF NOT EXISTS idx_votes_battle ON votes(battle_id,choice);
-CREATE INDEX IF NOT EXISTS idx_players_xp ON players(xp DESC);

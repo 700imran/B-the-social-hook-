@@ -1,0 +1,1 @@
+window.SHOWOFF_CFG={};
