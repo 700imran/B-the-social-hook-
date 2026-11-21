@@ -70,3 +70,12 @@ Do not put secrets in client components, source maps, analytics events or logs.
 - [ ] Backups and restore verified.
 - [ ] Critical/high security findings resolved.
 - [ ] Support and incident ownership assigned.
+
+## Going live on Cloudflare (Pages + D1)
+```
+npm i -g wrangler && wrangler login
+wrangler d1 create showoff                    # copy database_id into wrangler.toml
+wrangler d1 execute showoff --remote --file=schema.sql
+wrangler pages deploy                         # uses wrangler.toml (public/ + functions/)
+```
+Then open the site: the arena shows "LIVE" when `/api` answers, and "PREVIEW MODE" otherwise. See `API.md`.

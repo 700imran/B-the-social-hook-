@@ -1,0 +1,8 @@
+name = "showoff"
+pages_build_output_dir = "public"
+compatibility_date = "2026-11-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "showoff"
+database_id = "REPLACE_WITH_ID_FROM_wrangler_d1_create"
